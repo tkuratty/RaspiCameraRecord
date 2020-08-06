@@ -4,15 +4,21 @@ from sense_hat import SenseHat, ACTION_RELEASED
 from hat_disp import HatDisp
 from signal import pause
 
+"""
+Camera setting
+"""
 camera = PiCamera()
 camera.rotation = 180
 camera.resolution = (1920, 1080)
 camera.framerate = 30
-
+"""
+Settings for display on Sensor Hat
+"""
 hat_disp = HatDisp()
 hat_disp.show_stop()
 
 sense = SenseHat()
+
 recording = False
 operation = True
 
@@ -37,7 +43,7 @@ def start_stop_rec(event):
         recording = not recording
 
 
-# assign call back function for joystick inputs
+# assign callback functions for joystick inputs
 sense.stick.direction_up = exit_prog
 sense.stick.direction_middle = start_stop_rec
 

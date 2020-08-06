@@ -1,10 +1,13 @@
-# Control LED matrix display on SenseHat
-#
-#
+"""
+ Control LED matrix display on SenseHat
+"""
 from sense_hat import SenseHat
 
 
 class HatDisp:
+    """
+    LED color
+    """
     b = (0, 0, 255)
     r = (255, 0, 0)
     g = (0, 255, 0)
@@ -14,6 +17,9 @@ class HatDisp:
         self.sense = SenseHat()
 
     def show_stop(self):
+        """
+        Stop icon
+        """
         k = self.k
         g = self.g
         stop_icon = [
@@ -29,6 +35,9 @@ class HatDisp:
         self.sense.set_pixels(stop_icon)
 
     def show_rec(self):
+        """
+        Recording icon
+        """
         k = self.k
         r = self.r
         rec_icon = [
