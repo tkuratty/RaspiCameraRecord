@@ -1,11 +1,12 @@
-import sys
+import time
+import datetime
 from picamera import PiCamera
 from sense_hat import SenseHat, ACTION_RELEASED
 from hat_disp import HatDisp
-from signal import pause
+
 
 """
-Camera setting
+Camera settings
 """
 camera = PiCamera()
 camera.rotation = 180
@@ -16,39 +17,62 @@ Settings for display on Sensor Hat
 """
 hat_disp = HatDisp()
 hat_disp.show_stop()
-
 sense = SenseHat()
 
 recording = False
-operation = True
+operating = True
 
 
 def exit_prog(event):
-    global operation
+    global operating
     if event.action == ACTION_RELEASED:
-        operation = False
-        hat_disp.show_msg("Bye!")
-        sys.exit(0)
+        operating = False
 
 
 def start_stop_rec(event):
-    global recording, camera
+    global recording
     if event.action == ACTION_RELEASED:
-        if recording:
-            camera.stop_recording()
-            hat_disp.show_stop()
-        else:
-            camera.start_recording('/home/pi/Videos/video.h264')
-            hat_disp.show_rec()
         recording = not recording
+        print('Recording = ' + str(recording))
 
 
 # assign callback functions for joystick inputs
 sense.stick.direction_up = exit_prog
 sense.stick.direction_middle = start_stop_rec
 
+
+def stop_recording(camera):
+    try:
+        camera.stop_recording()
+        print('Stop recording.')
+    except Exception as e:
+        print(e)
+
+
 # main
 sense.clear()
 hat_disp.show_msg("Ready.")
 hat_disp.show_stop()
-pause()
+
+# main loop
+while operating:
+    if recording:
+        if not camera.recording:
+            dt_now = datetime.datetime.now()
+            file_name = '/home/pi/Videos/video' + \
+                dt_now.strftime('%Y%m%d%H%M%S')+".h264"
+            camera.start_recording(file_name)
+            hat_disp.show_rec()
+            print('Recording start...')
+    else:
+        if camera.recording:
+            recording = False
+            hat_disp.show_stop()
+            stop_recording(camera)
+    time.sleep(0.1)
+
+# Terminate process
+if camera.recording:
+    camera.stop_recording(camera)
+camera.close()
+hat_disp.show_msg("Bye!")
