@@ -14,12 +14,12 @@ TBD
 
 # Requirement
 
-* Hardware
+## Hardware
 - [Raspberry Pi](https://www.raspberrypi.org/products/)
 - [Sense HAT](https://www.raspberrypi.org/products/sense-hat/)
 - [Camera Module](https://www.raspberrypi.org/products/camera-module-v2/)
 
-* Software
+## Software
 - Raspberry Pi OS
 - Python 3.7.x
 
