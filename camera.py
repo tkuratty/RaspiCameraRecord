@@ -73,6 +73,6 @@ while operating:
 
 # Terminate process
 if camera.recording:
-    camera.stop_recording(camera)
+    stop_recording(camera)
 camera.close()
 hat_disp.show_msg("Bye!")

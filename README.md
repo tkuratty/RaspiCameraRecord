@@ -34,6 +34,7 @@ TBD
 # Note
 
 This software is for sample. Please refer to the license.
+The joystick on Sense HAT is associated to a cursor keys therefore command histories are called unintendedly. Please set auto login to off from raspi-config.
 
 # License
 Copyright (c) 2020 tkuratty
